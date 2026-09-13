@@ -2,11 +2,17 @@ const TOKEN_KEY = 'token'
 export const getToken = () => localStorage.getItem(TOKEN_KEY)
 export const setToken = (t: string) => localStorage.setItem(TOKEN_KEY, t)
 
+// Backend URL - Render
+const API_BASE = import.meta.env.PROD
+  ? 'https://lumiere-ai-6t4u.onrender.com'
+  : 'http://localhost:8000'
+
 async function req(path: string, opts: RequestInit = {}) {
   const headers: Record<string, string> = { 'Content-Type': 'application/json', ...(opts.headers as any) }
   const t = getToken()
   if (t) headers.Authorization = `Bearer ${t}`
-  const r = await fetch(path, { ...opts, headers })
+  const url = path.startsWith('/api') ? `${API_BASE}${path}` : path
+  const r = await fetch(url, { ...opts, headers })
   if (!r.ok) throw new Error((await r.json().catch(() => ({}))).detail || r.statusText)
   return r.json()
 }

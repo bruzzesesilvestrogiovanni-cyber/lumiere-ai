@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     jwt_secret: str = "change-me-in-production"
 
     # CORS
-    cors_origins: str = "http://localhost:5173,http://localhost:5174"
+    cors_origins: str = "http://localhost:5173,http://localhost:5174,https://lumiere-ai.pages.dev"
 
     # Grok/xAI API (for video ≤15s)
     grok_api_key: str = ""
