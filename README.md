@@ -32,6 +32,15 @@ Piattaforma professionale per la generazione di immagini e video con intelligenz
 | **Database** | Neon PostgreSQL (Frankfurt) | ✅ Connesso |
 | **Repository** | github.com/silvestrobruzzese-ui/lumiere-ai | ✅ Attivo |
 
+### Dashboard Account
+
+| Servizio | Dashboard | Note |
+|----------|-----------|------|
+| **Cloudflare Pages** | https://dash.cloudflare.com | Frontend hosting |
+| **Render** | https://dashboard.render.com | Backend hosting |
+| **Neon** | https://console.neon.tech | Database PostgreSQL |
+| **GitHub** | https://github.com/silvestrobruzzese-ui/lumiere-ai | Repository codice |
+
 ### Funzionalità Online
 
 - ✅ **Registrazione utenti** - Email + Password
