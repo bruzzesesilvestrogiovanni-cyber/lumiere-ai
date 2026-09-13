@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     # BytePlus ModelArk API (for video >15s or 21:9)
     byteplus_access_key: str = ""
     byteplus_secret_key: str = ""
+    byteplus_api_key: str = ""
+    byteplus_base_url: str = "https://api.byteplus.com/v1"
 
     # MiniMax API (Hailuo H3 - cheapest for video ≤10s)
     minimax_api_key: str = ""
