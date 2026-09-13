@@ -29,7 +29,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
 
   const handleSuccessLogin = (userEmail: string, userName: string) => {
     if (onLogin) {
-      onLogin({ email: userEmail, name: userName, credits: 0, plan: 'free' })
+      onLogin({ email: userEmail, name: userName, credits: 84, plan: 'free', trial_used: false })
     }
     handleClose()
   }
