@@ -1137,3 +1137,4 @@ Proprietario - Tutti i diritti riservati
 
 *Ultimo aggiornamento: 12 Settembre 2026*
 *Analisi Costi/Ricavi: v4.0 - Ottimizzata (Seedream Lite default, ~82% margine al 100% utilizzo)*
+# Build: Dom 13 Set 2026 19:00:42 CEST
