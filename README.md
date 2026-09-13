@@ -8,17 +8,40 @@ Piattaforma professionale per la generazione di immagini e video con intelligenz
 
 | Layer | Tecnologia | Provider (Prod) | Costo/mese |
 |-------|------------|-----------------|------------|
-| **Frontend** | React 18 + Vite + TypeScript | Vercel Pro | €20 |
-| **Backend** | FastAPI + SQLAlchemy | Railway Pro | €35 |
-| **Database** | SQLite (dev) → PostgreSQL (prod) | Neon Launch | €19 |
-| **Storage** | Object Storage S3-compatible | Cloudflare R2 | €10 |
+| **Frontend** | React 18 + Vite + TypeScript | Cloudflare Pages | **€0 (FREE)** |
+| **Backend** | FastAPI + SQLAlchemy | Render | **€0 (FREE)** |
+| **Database** | PostgreSQL | Neon | **€0 (FREE)** |
+| **Storage** | Object Storage S3-compatible | Cloudflare R2 | €0-10 |
 | **Pagamenti** | Stripe | Stripe | 1.4% + €0.25 |
 | **AI Video** | MiniMax H3 + Grok API + BytePlus API | Multi-provider | Variabile |
-| **AI Immagini** | Seedream (default) + MiniMax + Grok Aurora | Multi-provider | Variabile |
-| **Monitoring** | Error tracking + Analytics | Sentry + GA | €26 |
-| **Cache** | Redis (opzionale) | - | - |
+| **AI Immagini** | Seedream (default) + OpenAI GPT Image 2 | Multi-provider | Variabile |
+| **Monitoring** | Error tracking + Analytics | Sentry + GA | €0-26 |
 
-**Costi fissi totali**: ~€111/mese (configurazione raccomandata)
+**Costi fissi iniziali**: **€0/mese** (tutti i servizi su Free Tier!)
+
+---
+
+## 🚀 DEPLOYMENT LIVE (v5.0 - Settembre 2026)
+
+### URL di Produzione
+
+| Servizio | URL | Stato |
+|----------|-----|-------|
+| **Frontend** | https://lumiere-ai.pages.dev | ✅ LIVE |
+| **Backend** | https://lumiere-ai-6t4u.onrender.com | ✅ LIVE |
+| **Database** | Neon PostgreSQL (Frankfurt) | ✅ Connesso |
+| **Repository** | github.com/silvestrobruzzese-ui/lumiere-ai | ✅ Attivo |
+
+### Funzionalità Online
+
+- ✅ **Registrazione utenti** - Email + Password
+- ✅ **Login** - JWT authentication
+- ✅ **Database** - PostgreSQL su Neon
+- ✅ **Frontend** - React su Cloudflare Pages
+- ✅ **Backend API** - FastAPI su Render
+- ⏳ **Google OAuth** - Da implementare
+- ⏳ **Generazione AI** - In attesa API keys
+- ⏳ **Pagamenti Stripe** - Da configurare
 
 ---
 
@@ -256,40 +279,44 @@ STRIPE_WEBHOOK_SECRET=whsec_xxx
 
 ## 🚀 PROSSIMI STEP
 
-### Step 1: Completare Sviluppo (Priorità Alta)
+### Step 1: Ottenere API Keys (PRIORITÀ)
+
+| Servizio | Per cosa | URL | Variabile Render |
+|----------|----------|-----|------------------|
+| **Stripe** | Pagamenti | stripe.com | `STRIPE_SECRET_KEY` |
+| **OpenAI** | GPT Image 2 | platform.openai.com | `OPENAI_API_KEY` |
+| **Stability AI** | Seedream (default img) | platform.stability.ai | `STABILITY_API_KEY` |
+| **MiniMax** | Hailuo video ≤10s | minimaxi.com | `MINIMAX_API_KEY` |
+| **xAI** | Grok Aurora video 10-15s | x.ai | `GROK_API_KEY` |
+| **BytePlus** | Seedance video >15s | console.byteplus.com | `BYTEPLUS_ACCESS_KEY`, `BYTEPLUS_SECRET_KEY` |
+
+### Step 2: Configurare Variabili su Render
+
+Vai su **Render Dashboard** → **lumiere-ai** → **Environment** e aggiungi:
+
+```
+# Già configurate ✅
+DATABASE_URL=postgresql://...
+
+# Da aggiungere ⏳
+STRIPE_SECRET_KEY=sk_live_xxx
+STRIPE_WEBHOOK_SECRET=whsec_xxx
+OPENAI_API_KEY=sk-xxx
+STABILITY_API_KEY=sk-xxx
+MINIMAX_API_KEY=xxx
+GROK_API_KEY=xai-xxx
+BYTEPLUS_ACCESS_KEY=xxx
+BYTEPLUS_SECRET_KEY=xxx
+```
+
+### Step 3: Completare Sviluppo
 | Task | Descrizione | Stato |
 |------|-------------|-------|
-| Generazione Immagini | Implementare smart routing per immagini (come video) | ⏳ Da fare |
-| Google OAuth reale | Sostituire mock con Firebase Auth o Google OAuth | ⏳ Da fare |
-| Stripe Checkout | Collegare checkout modal a Stripe reale | ⏳ Da fare |
-| Webhook Stripe | Endpoint per conferma pagamenti e assegnazione crediti | ⏳ Da fare |
-| Download Video | Salvare video generati su S3 e permettere download | ⏳ Da fare |
-| Galleria Utente | Mostrare storico generazioni con preview | ⏳ Da fare |
-
-### Step 2: Ottenere API Keys
-```
-1. MiniMax (Hailuo) → https://platform.minimax.chat
-   - Registrati
-   - Vai su API Keys
-   - Aggiungi a .env: MINIMAX_API_KEY=xxx
-   - PRIORITÀ: Più economico per video ≤10s
-
-2. xAI (Grok) → https://x.ai/api
-   - Registrati
-   - Crea API key
-   - Aggiungi a .env: GROK_API_KEY=xai-xxx
-
-3. BytePlus → https://console.byteplus.com
-   - Registrati con email aziendale
-   - Vai su ModelArk > API Keys
-   - Aggiungi a .env: BYTEPLUS_ACCESS_KEY=xxx
-   - Aggiungi a .env: BYTEPLUS_SECRET_KEY=xxx
-
-4. Stripe → https://dashboard.stripe.com
-   - Registrati
-   - Vai su Developers > API Keys
-   - Aggiungi a .env: STRIPE_SECRET_KEY=sk_live_xxx
-```
+| Generazione Immagini | Collegare API Stability AI / OpenAI | ⏳ Da fare |
+| Generazione Video | Collegare API MiniMax / Grok / BytePlus | ⏳ Da fare |
+| Google OAuth | Implementare login con Google | ⏳ Da fare |
+| Stripe Checkout | Collegare checkout a Stripe | ⏳ Da fare |
+| Storage R2 | Salvare immagini/video generati | ⏳ Da fare |
 
 ### Step 3: Configurare Stripe Products
 ```
@@ -1135,6 +1162,26 @@ Proprietario - Tutti i diritti riservati
 
 **LUMIERE AI** — Illumina la tua creatività con l'intelligenza artificiale.
 
-*Ultimo aggiornamento: 12 Settembre 2026*
-*Analisi Costi/Ricavi: v4.0 - Ottimizzata (Seedream Lite default, ~82% margine al 100% utilizzo)*
-# Build: Dom 13 Set 2026 19:00:42 CEST
+---
+
+## 📜 Changelog
+
+### v5.0 - 13 Settembre 2026
+- ✅ **Deploy LIVE** su Cloudflare Pages + Render + Neon
+- ✅ **Costo €0/mese** - Tutti i servizi su Free Tier
+- ✅ **Registrazione/Login funzionante** con JWT
+- ✅ **Database PostgreSQL** connesso
+- 🔄 **Prossimo**: Configurare API keys per generazione AI
+
+### v4.1 - 12 Settembre 2026
+- Ottimizzazione costi: Cloudflare Pages invece di Vercel
+- Analisi margini: 82% al 100% utilizzo
+
+### v4.0 - 11 Settembre 2026
+- Seedream 5.0 Lite come default
+- Smart routing video (MiniMax/Grok/BytePlus)
+
+---
+
+*Ultimo aggiornamento: 13 Settembre 2026*
+*Deployment: v5.0 - LIVE (€0/mese startup cost)*
