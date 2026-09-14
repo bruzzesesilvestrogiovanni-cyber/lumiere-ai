@@ -32,6 +32,9 @@ class Settings(BaseSettings):
     google_client_secret: str = ""
     frontend_url: str = "https://lumiere-ai.pages.dev"
 
+    # NVIDIA NIM API (free tier - image & video generation)
+    nvidia_api_key: str = ""
+
     # Redis (optional, for task queue)
     redis_url: str = "redis://localhost:6379"
 

@@ -1,63 +1,66 @@
 """
 Smart Image Generation Router
 
-Priority (cost optimization):
-1. MiniMax image-01 - Cheapest (€0.018/img) for "minimax" model
-2. Stability SD3 - Good quality (€0.03/img)
-3. Grok Aurora - TOP quality for photorealistic images (€0.065/img) - PREMIUM/TRIAL
+Priority (using NVIDIA NIM free tier):
+1. NVIDIA FLUX.1-dev - Best quality (FREE)
+2. NVIDIA FLUX.1-schnell - Fast generation (FREE)
+3. NVIDIA SD3.5 Large - Alternative (FREE)
+
+Fallback (paid APIs - if NVIDIA fails):
+4. Stability SD3 - Good quality (€0.03/img)
+5. MiniMax image-01 - Cheapest (€0.018/img)
+6. Grok Aurora - TOP quality (€0.065/img)
 
 Modelli disponibili:
-- minimax: MiniMax image-01 (economico)
-- seedream_*: Stability SD3 (buona qualita)
-- grok_aurora: Grok Aurora (TOP qualita - per Trial)
+- flux_dev: NVIDIA FLUX.1-dev (TOP quality - FREE)
+- flux_schnell: NVIDIA FLUX.1-schnell (fast - FREE)
+- sd35: NVIDIA SD3.5 Large (FREE)
+- minimax: MiniMax image-01 (paid fallback)
+- grok_aurora: Grok Aurora (paid - premium)
 """
 
 from typing import Optional
+from .nvidia_api import NvidiaAPI
 from .stability_api import StabilityAPI
 from .minimax_api import MiniMaxAPI
 from .grok_api import GrokAPI
 
 
-# Pricing table for image generation
+# Pricing table for image generation (credits)
 IMAGE_MODEL_PRICING = {
-    "minimax": 3,                # MiniMax image-01 - cheapest (€0.018/img)
-    "seedream_5_lite": 4,        # Seedream 5.0 Lite (via Stability) - DEFAULT
-    "seedream_4.5": 4,           # Seedream 4.5 (via Stability)
-    "seedream_5_pro": 9,         # Seedream 5.0 Pro (via Stability)
-    "nano_banana_pro": 12,       # Nano Banana Pro (via Stability)
-    "nano_banana_2": 24,         # Nano Banana 2 (via Stability)
-    "grok_aurora": 30,           # Grok Aurora - TOP quality (€0.065/img) - TRIAL ONLY
+    # NVIDIA FREE tier (no real cost, but we charge credits for value)
+    "flux_dev": 4,           # FLUX.1-dev - Best quality (FREE API)
+    "flux_schnell": 2,       # FLUX.1-schnell - Fast (FREE API)
+    "sd35": 3,               # SD3.5 Large (FREE API)
+    # Legacy models (paid APIs - fallback)
+    "minimax": 3,            # MiniMax image-01 (€0.018/img)
+    "seedream_5_lite": 4,    # Seedream via Stability
+    "seedream_4.5": 4,       # Seedream via Stability
+    "seedream_5_pro": 9,     # Seedream via Stability
+    "grok_aurora": 30,       # Grok Aurora - TOP (€0.065/img)
 }
 
-# Default pricing (Seedream 5.0 Lite)
+# Default model (NVIDIA FLUX.1-dev - best quality, free)
+DEFAULT_MODEL = "flux_dev"
 DEFAULT_IMAGE_CREDITS = 4
 
 
 class ImageRouter:
     """
     Router for image generation
-    Pricing based on AI model
-
-    Routing:
-    - minimax -> MiniMax API (cheapest)
-    - grok_aurora -> Grok API (TOP quality - for Trial)
-    - others -> Stability API (good quality)
+    Primary: NVIDIA NIM (free tier)
+    Fallback: Paid APIs (Stability, MiniMax, Grok)
     """
 
     def __init__(self):
+        self.nvidia = NvidiaAPI()
         self.stability = StabilityAPI()
         self.minimax = MiniMaxAPI()
         self.grok = GrokAPI()
 
-    def calculate_credits(self, model: str = "seedream_5_lite") -> int:
-        """
-        Calculate credits based on AI model
-
-        Returns:
-            Number of credits required
-        """
+    def calculate_credits(self, model: str = DEFAULT_MODEL) -> int:
+        """Calculate credits based on AI model"""
         credits = IMAGE_MODEL_PRICING.get(model, DEFAULT_IMAGE_CREDITS)
-        # Round up for fractional credits (e.g., 3.5 -> 4)
         return int(credits) if credits == int(credits) else int(credits) + 1
 
     def get_model_pricing(self) -> dict:
@@ -67,13 +70,16 @@ class ImageRouter:
     async def generate_image(
         self,
         prompt: str,
-        model: str = "seedream_5_lite",
+        model: str = DEFAULT_MODEL,
         aspect_ratio: str = "1:1",
         negative_prompt: Optional[str] = None,
         seed: Optional[int] = None,
     ) -> dict:
         """
-        Generate image
+        Generate image with automatic API selection
+
+        Primary: NVIDIA NIM (free)
+        Fallback: Paid APIs if NVIDIA fails
 
         Args:
             prompt: Text description of the image
@@ -87,12 +93,46 @@ class ImageRouter:
         """
         credits = self.calculate_credits(model)
 
-        # Use Grok Aurora for "grok_aurora" model (TOP quality - for Trial)
+        # NVIDIA models (FREE - primary choice)
+        if model in ["flux_dev", "flux_schnell", "sd35"]:
+            try:
+                result = await self.nvidia.generate_image(
+                    prompt=prompt,
+                    model=model,
+                    aspect_ratio=aspect_ratio,
+                    negative_prompt=negative_prompt,
+                    seed=seed,
+                )
+                return {
+                    "image_base64": result.get("image_base64"),
+                    "api_used": "nvidia",
+                    "model": model,
+                    "credits": credits,
+                    "seed": result.get("seed"),
+                }
+            except Exception as e:
+                # If NVIDIA fails, fallback to Stability
+                print(f"NVIDIA API failed: {e}, falling back to Stability")
+                result = await self.stability.generate_image(
+                    prompt=prompt,
+                    aspect_ratio=aspect_ratio,
+                    negative_prompt=negative_prompt,
+                    seed=seed,
+                )
+                return {
+                    "image_base64": result.get("image_base64"),
+                    "api_used": "stability_fallback",
+                    "model": model,
+                    "credits": credits,
+                    "seed": result.get("seed"),
+                }
+
+        # Grok Aurora (paid - premium quality)
         if model == "grok_aurora":
             result = await self.grok.generate_image(
                 prompt=prompt,
                 aspect_ratio=aspect_ratio,
-                quality="medium",  # Best quality
+                quality="medium",
                 negative_prompt=negative_prompt,
                 seed=seed,
             )
@@ -106,7 +146,7 @@ class ImageRouter:
                 "revised_prompt": result.get("revised_prompt"),
             }
 
-        # Use MiniMax for "minimax" model (cheapest)
+        # MiniMax (paid - cheapest fallback)
         if model == "minimax":
             result = await self.minimax.generate_image(
                 prompt=prompt,
@@ -123,21 +163,53 @@ class ImageRouter:
                 "seed": result.get("seed"),
             }
 
-        # Use Stability for all other models
-        result = await self.stability.generate_image(
-            prompt=prompt,
-            aspect_ratio=aspect_ratio,
-            negative_prompt=negative_prompt,
-            seed=seed,
-        )
+        # Seedream/Stability models (paid)
+        if model.startswith("seedream_") or model.startswith("nano_banana"):
+            result = await self.stability.generate_image(
+                prompt=prompt,
+                aspect_ratio=aspect_ratio,
+                negative_prompt=negative_prompt,
+                seed=seed,
+            )
+            return {
+                "image_base64": result.get("image_base64"),
+                "api_used": "stability",
+                "model": model,
+                "credits": credits,
+                "seed": result.get("seed"),
+            }
 
-        return {
-            "image_base64": result.get("image_base64"),
-            "api_used": "stability",
-            "model": model,
-            "credits": credits,
-            "seed": result.get("seed"),
-        }
+        # Default: Use NVIDIA FLUX.1-dev
+        try:
+            result = await self.nvidia.generate_image(
+                prompt=prompt,
+                model="flux_dev",
+                aspect_ratio=aspect_ratio,
+                negative_prompt=negative_prompt,
+                seed=seed,
+            )
+            return {
+                "image_base64": result.get("image_base64"),
+                "api_used": "nvidia",
+                "model": "flux_dev",
+                "credits": credits,
+                "seed": result.get("seed"),
+            }
+        except Exception:
+            # Final fallback to Stability
+            result = await self.stability.generate_image(
+                prompt=prompt,
+                aspect_ratio=aspect_ratio,
+                negative_prompt=negative_prompt,
+                seed=seed,
+            )
+            return {
+                "image_base64": result.get("image_base64"),
+                "api_used": "stability",
+                "model": model,
+                "credits": credits,
+                "seed": result.get("seed"),
+            }
 
 
 # Singleton instance
