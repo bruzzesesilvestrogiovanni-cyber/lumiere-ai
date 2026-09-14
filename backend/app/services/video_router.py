@@ -23,9 +23,8 @@ from .minimax_api import MiniMaxAPI
 # BytePlus: for videos >15s or 21:9 cinema format
 CREDIT_PRICING = {
     "nvidia": {
-        # Free tier - charge minimal credits for value
+        # Free tier - 480p only, charge minimal credits for value
         "480p": {4: 42, 5: 52},
-        "720p": {4: 92, 5: 115},
     },
     "minimax": {
         "480p": {4: 84, 5: 105, 10: 210},
@@ -126,10 +125,10 @@ class VideoRouter:
             Tuple of (api_name, has_audio)
         """
         # NVIDIA Cosmos3 for short videos (FREE)
-        # Conditions: ≤5s, ≤720p, no 21:9, no audio needed
+        # Conditions: ≤5s, 480p only, no 21:9, no audio needed
         if (prefer_free and
             duration <= 5 and
-            resolution != "1080p" and
+            resolution == "480p" and
             aspect_ratio != "21:9" and
             not prefer_audio):
             return ("nvidia", False)
