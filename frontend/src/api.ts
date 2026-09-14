@@ -24,6 +24,8 @@ export const api = {
   create: (body: object) => req('/api/generations', { method: 'POST', body: JSON.stringify(body) }),
   list: () => req('/api/generations'),
   get: (id: number) => req(`/api/generations/${id}`),
+  chat: (messages: Array<{role: string, content: string}>) =>
+    req('/api/chat', { method: 'POST', body: JSON.stringify({ messages }) }),
 }
 
 export interface Generation {
