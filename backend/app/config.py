@@ -27,6 +27,11 @@ class Settings(BaseSettings):
     stripe_secret_key: str = ""
     stripe_webhook_secret: str = ""
 
+    # Google OAuth
+    google_client_id: str = ""
+    google_client_secret: str = ""
+    frontend_url: str = "https://lumiere-ai.pages.dev"
+
     # Redis (optional, for task queue)
     redis_url: str = "redis://localhost:6379"
 

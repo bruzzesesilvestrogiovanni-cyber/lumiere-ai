@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { api, setToken, getToken } from '../api'
 
 export interface User {
   email: string
@@ -29,6 +30,50 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   const [isPricingOpen, setIsPricingOpen] = useState(false)
 
+  // Check for token in URL (Google OAuth callback) or localStorage on mount
+  useEffect(() => {
+    const handleAuth = async () => {
+      // Check URL for token (Google OAuth redirect)
+      const urlParams = new URLSearchParams(window.location.search)
+      const tokenFromUrl = urlParams.get('token')
+      const errorFromUrl = urlParams.get('error')
+
+      if (errorFromUrl) {
+        console.error('OAuth error:', errorFromUrl)
+        // Clear URL params
+        window.history.replaceState({}, '', window.location.pathname)
+        return
+      }
+
+      if (tokenFromUrl) {
+        // Save token from Google OAuth
+        setToken(tokenFromUrl)
+        // Clear URL params
+        window.history.replaceState({}, '', window.location.pathname)
+      }
+
+      // Check if we have a token (from URL or localStorage)
+      const token = getToken()
+      if (token) {
+        try {
+          const userInfo = await api.me()
+          setUser({
+            email: userInfo.email,
+            name: userInfo.email.split('@')[0],
+            credits: userInfo.credits || 84,
+            plan: userInfo.plan || 'free',
+            trial_used: userInfo.trial_used || false
+          })
+        } catch (err) {
+          // Token invalid, clear it
+          localStorage.removeItem('token')
+        }
+      }
+    }
+
+    handleAuth()
+  }, [])
+
   const login = (newUser: User) => {
     // Set default credits for new users (84 = 1 video 4s 480p OR 21 images Lite)
     setUser({
@@ -42,6 +87,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     setUser(null)
+    localStorage.removeItem('token')
   }
 
   const openLogin = () => setIsLoginOpen(true)

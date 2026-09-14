@@ -81,8 +81,11 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
   }
 
   const handleGoogleLogin = () => {
-    // TODO: Implement Google OAuth
-    setError('Google login coming soon')
+    // Redirect to backend Google OAuth endpoint
+    const backendUrl = import.meta.env.PROD
+      ? 'https://lumiere-ai-6t4u.onrender.com'
+      : 'http://localhost:8000'
+    window.location.href = `${backendUrl}/api/auth/google`
   }
 
   return (
