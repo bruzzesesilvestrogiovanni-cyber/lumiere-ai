@@ -3,65 +3,72 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useUser } from '../context/UserContext'
 
-// Placeholder colors for demo images
-const GRADIENTS = [
-  'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-  'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-  'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-  'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-  'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-  'linear-gradient(135deg, #d299c2 0%, #fef9d7 100%)',
-  'linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)',
-]
-
 const HERO_SLIDES = [
   {
     id: 1,
     title: 'Seedream 5.0 Pro | Layer Separation',
     subtitle: 'Precise editing, multilingual generation, and high-density visuals, all in one',
-    gradient: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=400&fit=crop',
   },
   {
     id: 2,
     title: 'Seedance 2.5 Showcase',
     subtitle: '30s videos. Rich references. Cinematic motion.',
-    gradient: 'linear-gradient(135deg, #2d1f3d 0%, #1a1a2e 50%, #16213e 100%)',
+    image: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?w=1200&h=400&fit=crop',
   },
   {
     id: 3,
     title: 'Music Video Agent',
     subtitle: 'Turn any song into a stunning music video in seconds.',
-    gradient: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+    image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1200&h=400&fit=crop',
   },
 ]
 
 const FEATURE_MODELS = [
-  { id: 'seedance', name: 'Seedance 2.0', desc: 'Cinematic video generation', icon: '📊', badge: 'hot' as const },
-  { id: 'gpt-image', name: 'GPT-image-2', desc: 'Sharper image creation', icon: '✨' },
-  { id: 'seedream', name: 'Seedream 5.0 Pro', desc: 'Production-ready visual creation', icon: '📊' },
-  { id: 'seedance-mini', name: 'Seedance 2.0 Mini', desc: 'Cheaper and Faster', icon: '📊', badge: 'new' as const },
+  { id: 'seedance', name: 'Seedance 2.0', desc: 'Cinematic video generation', icon: '📊', badge: 'hot' as const, image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=300&h=200&fit=crop' },
+  { id: 'gpt-image', name: 'GPT-image-2', desc: 'Sharper image creation', icon: '✨', image: 'https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=300&h=200&fit=crop' },
+  { id: 'seedream', name: 'Seedream 5.0 Pro', desc: 'Production-ready visual creation', icon: '📊', image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=300&h=200&fit=crop' },
+  { id: 'seedance-mini', name: 'Seedance 2.0 Mini', desc: 'Cheaper and Faster', icon: '📊', badge: 'new' as const, image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&h=200&fit=crop' },
 ]
 
 const CANVAS_TEMPLATES = [
-  { id: 1, name: 'Storyboard Grid', desc: 'Turn ideas into multi-frame scenes' },
-  { id: 2, name: 'Shot Designer', desc: 'Create cinematic camera angles' },
-  { id: 3, name: 'Cinematic color', desc: 'Add film-style tones' },
-  { id: 4, name: 'Keyframe camera', desc: 'Control camera moves with precision' },
-  { id: 5, name: 'Character poses', desc: 'Generate dynamic character positions' },
+  { id: 1, name: 'Storyboard Grid', desc: 'Turn ideas into multi-frame scenes', image: 'https://images.unsplash.com/photo-1542744094-3a31f272c490?w=400&h=300&fit=crop' },
+  { id: 2, name: 'Shot Designer', desc: 'Create cinematic camera angles', image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=300&fit=crop' },
+  { id: 3, name: 'Cinematic color', desc: 'Add film-style tones', image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=400&h=300&fit=crop' },
+  { id: 4, name: 'Keyframe camera', desc: 'Control camera moves with precision', image: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=400&h=300&fit=crop' },
+  { id: 5, name: 'Character poses', desc: 'Generate dynamic character positions', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=300&fit=crop' },
+]
+
+// Bonus gallery images (4 images + 4 videos)
+const BONUS_IMAGES = [
+  'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=300&h=200&fit=crop',
+  'https://images.unsplash.com/photo-1699116548123-f27d4f0e5e23?w=300&h=200&fit=crop',
+  'https://images.unsplash.com/photo-1684779847639-fbcc5a57dfe9?w=300&h=200&fit=crop',
+  'https://images.unsplash.com/photo-1683009427666-340595e57e43?w=300&h=200&fit=crop',
+  'https://images.unsplash.com/photo-1682695796497-31a44224d6d6?w=300&h=200&fit=crop',
+  'https://images.unsplash.com/photo-1682686580849-3e7f67df4015?w=300&h=200&fit=crop',
+  'https://images.unsplash.com/photo-1682687218147-9806132dc697?w=300&h=200&fit=crop',
+  'https://images.unsplash.com/photo-1682695797221-8164ff1fafc9?w=300&h=200&fit=crop',
+]
+
+// Bonus thumbnail images (3 small)
+const BONUS_THUMBS = [
+  'https://images.unsplash.com/photo-1696446702183-cbd13d78e1e7?w=100&h=100&fit=crop',
+  'https://images.unsplash.com/photo-1698778573682-346d219f7a2d?w=100&h=100&fit=crop',
+  'https://images.unsplash.com/photo-1682686580186-b55d2a91053c?w=100&h=100&fit=crop',
 ]
 
 const INSPIRATION_ITEMS = [
-  { id: 1, type: 'video' as const },
-  { id: 2, type: 'video' as const },
-  { id: 3, type: 'image' as const },
-  { id: 4, type: 'image' as const },
-  { id: 5, type: 'image' as const },
-  { id: 6, type: 'video' as const },
-  { id: 7, type: 'image' as const },
-  { id: 8, type: 'image' as const },
-  { id: 9, type: 'video' as const },
-  { id: 10, type: 'image' as const },
+  { id: 1, type: 'video' as const, image: 'https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=300&h=400&fit=crop' },
+  { id: 2, type: 'video' as const, image: 'https://images.unsplash.com/photo-1699894009877-20c145e3a29c?w=300&h=400&fit=crop' },
+  { id: 3, type: 'image' as const, image: 'https://images.unsplash.com/photo-1684779847639-fbcc5a57dfe9?w=300&h=400&fit=crop' },
+  { id: 4, type: 'image' as const, image: 'https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=300&h=400&fit=crop' },
+  { id: 5, type: 'image' as const, image: 'https://images.unsplash.com/photo-1698778573682-346d219f7a2d?w=300&h=400&fit=crop' },
+  { id: 6, type: 'video' as const, image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=300&h=400&fit=crop' },
+  { id: 7, type: 'image' as const, image: 'https://images.unsplash.com/photo-1696446702183-cbd13d78e1e7?w=300&h=400&fit=crop' },
+  { id: 8, type: 'image' as const, image: 'https://images.unsplash.com/photo-1682695796497-31a44224d6d6?w=300&h=400&fit=crop' },
+  { id: 9, type: 'video' as const, image: 'https://images.unsplash.com/photo-1682686580849-3e7f67df4015?w=300&h=400&fit=crop' },
+  { id: 10, type: 'image' as const, image: 'https://images.unsplash.com/photo-1682687218147-9806132dc697?w=300&h=400&fit=crop' },
 ]
 
 export default function Home() {
@@ -100,7 +107,7 @@ export default function Home() {
         <div className="hero-slides" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
           {HERO_SLIDES.map((slide) => (
             <div key={slide.id} className="hero-slide">
-              <div className="hero-slide-bg" style={{ background: slide.gradient }} />
+              <div className="hero-slide-bg" style={{ backgroundImage: `url(${slide.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
               <div className="hero-slide-content">
                 <h2 className="hero-slide-title">{slide.title}</h2>
                 <p className="hero-slide-subtitle">{slide.subtitle}</p>
@@ -135,6 +142,7 @@ export default function Home() {
           <div
             key={model.id}
             className="feature-card"
+            style={{ backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, transparent 100%), url(${model.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             onClick={() => navigate('/canvas', { state: { model: model.id } })}
           >
             {model.badge && (
@@ -153,7 +161,7 @@ export default function Home() {
           <h2 className="section-title">{t('home.createWithCanvas')}</h2>
         </div>
         <div className="canvas-grid">
-          {CANVAS_TEMPLATES.map((tpl, idx) => (
+          {CANVAS_TEMPLATES.map((tpl) => (
             <div
               key={tpl.id}
               className="canvas-item"
@@ -161,7 +169,7 @@ export default function Home() {
             >
               <div
                 className="canvas-item-bg"
-                style={{ background: GRADIENTS[idx % GRADIENTS.length] }}
+                style={{ backgroundImage: `url(${tpl.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
               />
               <div className="canvas-item-label">{tpl.name}</div>
             </div>
@@ -179,16 +187,18 @@ export default function Home() {
             style={{
               width: '100%',
               height: '100%',
-              background: 'linear-gradient(135deg, #1a1a2e 0%, #2d1f3d 50%, #16213e 100%)',
+              backgroundImage: 'linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://images.unsplash.com/photo-1626379953822-baec19c3accd?w=1200&h=600&fit=crop)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: 'var(--text-dim)',
+              color: 'white',
             }}
           >
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>▶</div>
-              <div>{t('home.videoPlaceholder')}</div>
+              <div style={{ fontSize: '64px', marginBottom: '16px', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>▶</div>
+              <div style={{ fontSize: '18px', fontWeight: '500', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{t('home.videoPlaceholder')}</div>
             </div>
           </div>
         </div>
@@ -203,23 +213,25 @@ export default function Home() {
             {t('home.bonusDesc')}
           </p>
           <div className="bonus-thumbs">
-            {[0, 1, 2].map((i) => (
+            {BONUS_THUMBS.map((img, i) => (
               <div
                 key={i}
                 className="bonus-thumb"
-                style={{ background: GRADIENTS[i + 3] }}
+                style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
               />
             ))}
           </div>
         </div>
         <div className="bonus-gallery">
-          {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+          {BONUS_IMAGES.map((img, i) => (
             <div key={i} className="bonus-gallery-item">
               <div style={{
                 width: '100%',
                 height: '100%',
                 minHeight: '80px',
-                background: GRADIENTS[i % GRADIENTS.length]
+                backgroundImage: `url(${img})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
               }} />
               {i >= 4 && (
                 <span className="play-icon">▶</span>
@@ -379,12 +391,14 @@ export default function Home() {
         </div>
 
         <div className="inspiration-grid">
-          {filteredInspiration.map((item, idx) => (
+          {filteredInspiration.map((item) => (
             <div key={item.id} className="inspiration-item">
               <div style={{
                 width: '100%',
                 height: '100%',
-                background: GRADIENTS[idx % GRADIENTS.length]
+                backgroundImage: `url(${item.image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
               }} />
               <span className="inspiration-item-badge">
                 {item.type === 'video' ? '▶' : 'AI'} {item.type}
