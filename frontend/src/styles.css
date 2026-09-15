@@ -73,8 +73,9 @@ input, textarea, select { font: inherit; }
   justify-content: center;
   gap: 16px;
   padding: 0 24px;
-  position: relative;
-  z-index: 100;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .promo-badge {
