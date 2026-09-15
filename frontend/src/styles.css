@@ -52,7 +52,7 @@ input, textarea, select { font: inherit; }
 .app-body {
   display: flex;
   flex: 1;
-  padding-top: var(--header-h);
+  padding-top: calc(var(--header-h) + var(--banner-h));
 }
 
 .main-content {
@@ -73,8 +73,10 @@ input, textarea, select { font: inherit; }
   justify-content: center;
   gap: 16px;
   padding: 0 24px;
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
 }
 
