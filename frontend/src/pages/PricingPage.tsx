@@ -22,7 +22,6 @@ interface Plan {
   monthlyBonus: number
   seedanceCredits: number
   seedanceTime: string
-  promoText?: string
   features: { text: string; included: boolean; badge?: string; badgeType?: string }[]
   highlight?: 'teal' | 'gold'
   bonusSection?: { title: string; subtitle: string; perCredit: string; usage: string }
@@ -80,7 +79,6 @@ const PLANS: Plan[] = [
     monthlyBonus: 215,
     seedanceCredits: 145,
     seedanceTime: 'Up to 7 seconds of 480p Seedance 2.5',
-    promoText: 'SD2.0 Mini 74% off & SD2.0 Fast 54% off until Sep 7, 2026',
     features: [
       { text: 'Remove Watermarks in Downloads', included: true },
       { text: 'Access to all models', included: true },
@@ -109,7 +107,6 @@ const PLANS: Plan[] = [
     seedanceCredits: 550,
     seedanceTime: 'Up to 26 seconds of 480p Seedance 2.5',
     highlight: 'teal',
-    promoText: 'SD2.0 Mini 74% off & SD2.0 Fast 54% off until Sep 7, 2026',
     features: [
       { text: 'Remove Watermarks in Downloads', included: true },
       { text: 'Access to all models', included: true },
@@ -135,7 +132,6 @@ const PLANS: Plan[] = [
     monthlyBonus: 1200,
     seedanceCredits: 800,
     seedanceTime: 'Up to 38 seconds of 480p Seedance 2.5',
-    promoText: 'SD2.0 Mini 74% off & SD2.0 Fast 54% off until Sep 7, 2026',
     features: [
       { text: 'Remove Watermarks in Downloads', included: true },
       { text: 'Access to all models', included: true },
@@ -164,7 +160,6 @@ const PLANS: Plan[] = [
     seedanceCredits: 2000,
     seedanceTime: 'Up to 1 minute 35 seconds of 480p Seedance 2.5',
     highlight: 'gold',
-    promoText: 'SD2.0 Mini 74% off & SD2.0 Fast 54% off until Sep 7, 2026',
     features: [
       { text: 'Remove Watermarks in Downloads', included: true },
       { text: 'Early access to all models', included: true, badge: 'Exclusive', badgeType: 'outline' },
@@ -424,7 +419,6 @@ export default function PricingPage() {
                       <div className="seedance-header">
                         <span className="seedance-name">Seedance 2.5</span>
                         <span className="exclusive-badge">{t('pricing.exclusive')}</span>
-                        <span className="limited-badge">{t('pricing.limitedTime')}</span>
                       </div>
                       <div className="seedance-credits">
                         <span className="seedance-icon">●</span>
@@ -432,14 +426,6 @@ export default function PricingPage() {
                         <span className="info-icon">○</span>
                       </div>
                       <p className="seedance-time">{plan.seedanceTime}</p>
-                    </div>
-                  )}
-
-                  {/* Promo */}
-                  {plan.promoText && (
-                    <div className="promo-box">
-                      <span className="limited-tag">{t('pricing.limitedTime')}</span>
-                      <p>{plan.promoText}</p>
                     </div>
                   )}
                 </div>
@@ -498,7 +484,6 @@ export default function PricingPage() {
                   <div className="seedance-bonus-header">
                     <span className="seedance-name">Seedance 2.5</span>
                     <span className="exclusive-tag">{t('pricing.exclusive')}</span>
-                    <span className="limited-tag">{t('pricing.limitedTime')}</span>
                   </div>
                   <div className="seedance-bonus-credits">
                     <span className="seedance-icon">●</span>
