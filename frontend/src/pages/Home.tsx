@@ -66,16 +66,16 @@ interface InspirationItem {
 }
 
 const INSPIRATION_ITEMS: InspirationItem[] = [
-  { id: 1, type: 'video', image: 'https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=300&h=400&fit=crop', video: 'https://www.w3schools.com/html/mov_bbb.mp4' },
-  { id: 2, type: 'video', image: 'https://images.unsplash.com/photo-1699894009877-20c145e3a29c?w=300&h=400&fit=crop', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
-  { id: 3, type: 'image', image: 'https://images.unsplash.com/photo-1684779847639-fbcc5a57dfe9?w=300&h=400&fit=crop' },
-  { id: 4, type: 'image', image: 'https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=300&h=400&fit=crop' },
-  { id: 5, type: 'image', image: 'https://images.unsplash.com/photo-1698778573682-346d219f7a2d?w=300&h=400&fit=crop' },
-  { id: 6, type: 'video', image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=300&h=400&fit=crop', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4' },
-  { id: 7, type: 'image', image: 'https://images.unsplash.com/photo-1696446702183-cbd13d78e1e7?w=300&h=400&fit=crop' },
-  { id: 8, type: 'image', image: 'https://images.unsplash.com/photo-1682695796497-31a44224d6d6?w=300&h=400&fit=crop' },
-  { id: 9, type: 'video', image: 'https://images.unsplash.com/photo-1682686580849-3e7f67df4015?w=300&h=400&fit=crop', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4' },
-  { id: 10, type: 'image', image: 'https://images.unsplash.com/photo-1682687218147-9806132dc697?w=300&h=400&fit=crop' },
+  { id: 1, type: 'video', image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=300&h=400&fit=crop', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
+  { id: 2, type: 'video', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&h=400&fit=crop', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4' },
+  { id: 3, type: 'image', image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=300&h=400&fit=crop' },
+  { id: 4, type: 'image', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=400&fit=crop' },
+  { id: 5, type: 'image', image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=300&h=400&fit=crop' },
+  { id: 6, type: 'video', image: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=300&h=400&fit=crop', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' },
+  { id: 7, type: 'image', image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&h=400&fit=crop' },
+  { id: 8, type: 'image', image: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=300&h=400&fit=crop' },
+  { id: 9, type: 'video', image: 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=300&h=400&fit=crop', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4' },
+  { id: 10, type: 'image', image: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=300&h=400&fit=crop' },
 ]
 
 export default function Home() {
