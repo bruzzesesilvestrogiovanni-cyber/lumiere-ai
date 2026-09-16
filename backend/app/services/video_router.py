@@ -5,12 +5,12 @@ Automatically selects the best API based on user requirements
 Priority (cost optimization):
 1. MiniMax H3 - Cheapest for videos ≤10s (€0.009-0.074/sec)
 2. Grok - For videos 10-15s with audio (€0.074-0.129/sec)
-3. BytePlus - For videos >15s or 21:9 cinema (€0.095-0.213/sec)
+3. Fal.ai Seedance - For videos >15s or 21:9 cinema (via Seedance 2.5)
 """
 
 from typing import Optional, Tuple
 from .grok_api import GrokAPI
-from .byteplus_api import BytePlusAPI
+from .fal_api import FalAPI
 from .minimax_api import MiniMaxAPI
 
 
@@ -30,7 +30,7 @@ CREDIT_PRICING = {
         "720p": {4: 184, 5: 230, 10: 460, 15: 690},
         "1080p": {4: 300, 5: 375, 10: 752, 15: 1128},
     },
-    "byteplus": {
+    "fal": {
         "480p": {4: 84, 5: 105, 10: 210, 15: 315, 20: 420, 25: 525, 30: 630},
         "720p": {4: 184, 5: 230, 10: 460, 15: 690, 20: 920, 25: 1150, 30: 1380},
         "1080p": {4: 300, 5: 375, 10: 752, 15: 1128, 20: 1504, 25: 1880, 30: 2257},
@@ -58,9 +58,9 @@ def calculate_grok_credits(resolution: str, duration: int) -> int:
     return pricing[durations[-1]]
 
 
-def calculate_byteplus_credits(resolution: str, duration: int) -> int:
-    """Calculate credits for BytePlus API"""
-    pricing = CREDIT_PRICING["byteplus"].get(resolution, CREDIT_PRICING["byteplus"]["720p"])
+def calculate_fal_credits(resolution: str, duration: int) -> int:
+    """Calculate credits for Fal.ai Seedance API"""
+    pricing = CREDIT_PRICING["fal"].get(resolution, CREDIT_PRICING["fal"]["720p"])
     durations = sorted(pricing.keys())
     for d in durations:
         if duration <= d:
@@ -75,13 +75,13 @@ class VideoRouter:
     Decision logic (cost optimized):
     - If duration <= 10s AND aspect_ratio != 21:9 → Use MiniMax (cheapest)
     - If duration 10-15s AND aspect_ratio != 21:9 → Use Grok (includes audio)
-    - If duration > 15s OR aspect_ratio == 21:9 → Use BytePlus (supports longer/cinema)
+    - If duration > 15s OR aspect_ratio == 21:9 → Use Fal.ai Seedance (supports longer/cinema)
     """
 
     def __init__(self):
         self.minimax = MiniMaxAPI()
         self.grok = GrokAPI()
-        self.byteplus = BytePlusAPI()
+        self.fal = FalAPI()
 
     def select_api(
         self,
@@ -100,11 +100,11 @@ class VideoRouter:
         Returns:
             Tuple of (api_name, has_audio)
         """
-        # BytePlus required for:
+        # Fal.ai Seedance required for:
         # - Videos longer than 15 seconds
         # - Cinema 21:9 aspect ratio (not supported by others)
         if duration > 15 or aspect_ratio == "21:9":
-            return ("byteplus", False)
+            return ("fal", False)
 
         # If user wants audio, use Grok (up to 15s)
         if prefer_audio and duration <= 15:
@@ -137,7 +137,7 @@ class VideoRouter:
         elif api_name == "grok":
             return calculate_grok_credits(resolution, duration)
         else:
-            return calculate_byteplus_credits(resolution, duration)
+            return calculate_fal_credits(resolution, duration)
 
     async def generate_video(
         self,
@@ -182,12 +182,11 @@ class VideoRouter:
                 start_frame=start_frame,
             )
         else:
-            result = await self.byteplus.generate_video(
+            result = await self.fal.generate_video(
                 prompt=prompt,
                 aspect_ratio=aspect_ratio,
-                resolution=resolution,
                 duration=duration,
-                start_frame=start_frame,
+                image_url=start_frame,  # Fal uses image_url instead of start_frame
             )
 
         return {
@@ -214,7 +213,7 @@ class VideoRouter:
         elif api_name == "grok":
             return await self.grok.get_video_status(task_id)
         else:
-            return await self.byteplus.get_video_status(task_id)
+            return await self.fal.get_video_status(task_id)
 
 
 # Singleton instance

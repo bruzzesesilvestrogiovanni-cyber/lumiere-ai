@@ -23,6 +23,9 @@ class Settings(BaseSettings):
     # MiniMax API (Hailuo H3 - cheapest for video ≤10s)
     minimax_api_key: str = ""
 
+    # Fal.ai API (Seedance 2.5 - video up to 30s)
+    fal_api_key: str = ""
+
     # Stripe (payments)
     stripe_secret_key: str = ""
     stripe_webhook_secret: str = ""
