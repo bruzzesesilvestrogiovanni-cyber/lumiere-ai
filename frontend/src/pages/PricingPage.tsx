@@ -219,10 +219,21 @@ export default function PricingPage() {
                 </div>
               )}
 
-              {/* Header */}
+              {/* Header with Models inline */}
               <div className="plan-header-gvoid">
                 <span className="plan-dot" style={{ background: getColorClass(plan.color) }} />
                 <span className="plan-name-gvoid">{plan.name}</span>
+                {/* Models inline with name */}
+                {plan.models.length > 0 && (
+                  <div className="plan-models-inline">
+                    {plan.models.slice(0, 1).map((model, i) => (
+                      <div key={i} className="model-badge-inline">
+                        <span className="model-name-inline">{model.name}</span>
+                        <span className="model-tag-inline">UNLIMITED</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
               <p className="plan-tagline-gvoid">{plan.tagline}</p>
 
@@ -244,21 +255,6 @@ export default function PricingPage() {
                 <span className="price-value">{plan.price}</span>
                 <span className="price-period">{plan.period}</span>
               </div>
-
-              {/* Models */}
-              {plan.models.length > 0 && (
-                <div className="plan-models">
-                  {plan.models.map((model, i) => (
-                    <div key={i} className="model-badge">
-                      <span className="model-icon">📊</span>
-                      <span className="model-name">{model.name}</span>
-                      <span className={`model-tag ${model.unlimited ? 'unlimited' : 'limited'}`}>
-                        {model.unlimited ? 'UNLIMITED' : '-50%'}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
 
               {/* Features */}
               <ul className="plan-features-gvoid">
