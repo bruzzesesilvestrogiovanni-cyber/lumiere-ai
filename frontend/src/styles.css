@@ -5351,6 +5351,11 @@ textarea { min-height: 110px; resize: vertical; }
   color: #fff;
 }
 
+.plan-badge.onetime {
+  background: linear-gradient(135deg, #ffd700, #ffb020);
+  color: #000;
+}
+
 /* Plan Header */
 .plan-header-gvoid {
   display: flex;

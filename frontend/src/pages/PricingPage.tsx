@@ -17,129 +17,116 @@ interface Plan {
   badge?: 'popular' | 'maximum'
   models: { name: string; unlimited: boolean }[]
   features: string[]
+  oneTime?: boolean
 }
 
 const PLANS: Plan[] = [
   {
+    id: 'trial',
+    name: 'Trial',
+    tagline: 'Per provare',
+    credits: 85,
+    extraCredits: 0,
+    price: '€2,49',
+    priceValue: 2.49,
+    period: '/3 giorni',
+    totalCredits: 85,
+    color: 'yellow',
+    oneTime: true,
+    models: [],
+    features: [
+      '2 immagini qualita TOP',
+      'Solo Grok Aurora (TOP)',
+      'Fotorealismo massimo',
+      'Senza watermark',
+      'Solo una volta per account',
+    ],
+  },
+  {
     id: 'basic',
     name: 'Basic',
     tagline: 'Per iniziare',
-    credits: 1000,
+    credits: 900,
     extraCredits: 0,
-    price: '€9,99',
-    priceValue: 9.99,
+    price: '€24,99',
+    priceValue: 24.99,
     period: '/mese',
-    totalCredits: 1000,
+    totalCredits: 900,
     color: 'green',
     models: [],
     features: [
-      '~12 video brevi o 5 in HD',
-      '~100 immagini AI',
-      'Tutti i modelli (video, immagine, audio)',
-      'Canvas completo',
-      'Crediti rinnovati ogni mese',
-      'Video cinematici',
-      '1 generazione alla volta',
+      '~225 immagini o ~8 video',
+      'Tutti i modelli',
+      'Senza watermark',
+      'Rinnovo automatico',
+    ],
+  },
+  {
+    id: 'standard',
+    name: 'Standard',
+    tagline: 'Per creare spesso',
+    credits: 2100,
+    extraCredits: 0,
+    price: '€59,99',
+    priceValue: 59.99,
+    period: '/mese',
+    totalCredits: 2100,
+    color: 'cyan',
+    badge: 'popular',
+    models: [
+      { name: 'Seedream 5.0', unlimited: true },
+    ],
+    features: [
+      '~525 immagini o ~20 video',
+      'Tutti i modelli',
+      'Senza watermark',
+      'Priorita generazione',
     ],
   },
   {
     id: 'advanced',
     name: 'Advanced',
-    tagline: 'Per creare spesso',
-    credits: 3000,
-    extraCredits: 300,
-    price: '€29,99',
-    priceValue: 29.99,
+    tagline: 'Per professionisti',
+    credits: 4400,
+    extraCredits: 0,
+    price: '€124,99',
+    priceValue: 124.99,
     period: '/mese',
-    totalCredits: 3300,
-    color: 'yellow',
+    totalCredits: 4400,
+    color: 'orange',
     models: [
-      { name: 'Seedream 4.5', unlimited: true },
-    ],
-    features: [
-      'Tutti i modelli (video, immagine, audio)',
-      'Canvas completo',
-      'Video cinematici',
-      'Voci cinematiche',
-      'Volti reali in immagini e video',
-      '~41 video brevi o 16 in HD',
-      '~330 immagini AI',
-      '+300 crediti regalo',
-    ],
-  },
-  {
-    id: 'pro',
-    name: 'Pro',
-    tagline: 'Video completi',
-    credits: 7500,
-    extraCredits: 800,
-    price: '€72',
-    priceValue: 72,
-    period: '/mese',
-    totalCredits: 8300,
-    color: 'cyan',
-    models: [
-      { name: 'SeedAudio 1.0', unlimited: true },
+      { name: 'Seedream 5.0', unlimited: true },
       { name: 'Voci Cinematiche', unlimited: true },
-      { name: 'AutoDub', unlimited: true },
-      { name: 'Seedream 4.5', unlimited: true },
-      { name: 'Seedream 5.0 Lite', unlimited: true },
     ],
     features: [
-      'Tutti i modelli (video, immagine, audio)',
-      'Canvas completo',
-      'Video cinematici',
+      '~1.100 immagini o ~42 video',
+      'Tutti i modelli',
+      'Senza watermark',
+      'Supporto prioritario',
     ],
   },
   {
     id: 'ultra',
     name: 'Ultra',
-    tagline: 'Produzione intensiva',
-    credits: 15000,
-    extraCredits: 3000,
-    price: '€149',
-    priceValue: 149,
-    period: '/mese',
-    totalCredits: 18000,
-    color: 'orange',
-    badge: 'popular',
-    models: [
-      { name: 'SeedAudio 1.0', unlimited: true },
-      { name: 'Voci Cinematiche', unlimited: true },
-      { name: 'AutoDub', unlimited: true },
-      { name: 'Seedream 4.5', unlimited: true },
-      { name: 'Seedream 5.0 Lite', unlimited: true },
-    ],
-    features: [
-      'Tutti i modelli (video, immagine, audio)',
-      'Canvas completo',
-      'Video cinematici',
-    ],
-  },
-  {
-    id: 'elite',
-    name: 'Elite',
     tagline: 'Senza limiti',
-    credits: 32000,
-    extraCredits: 8000,
-    price: '€319',
-    priceValue: 319,
+    credits: 10500,
+    extraCredits: 0,
+    price: '€299,99',
+    priceValue: 299.99,
     period: '/mese',
-    totalCredits: 40000,
+    totalCredits: 10500,
     color: 'pink',
     badge: 'maximum',
     models: [
-      { name: 'SeedAudio 1.0', unlimited: true },
+      { name: 'Seedream 5.0', unlimited: true },
       { name: 'Voci Cinematiche', unlimited: true },
-      { name: 'AutoDub', unlimited: true },
-      { name: 'Seedream 4.5', unlimited: true },
-      { name: 'Seedream 5.0 Lite', unlimited: true },
-      { name: 'Seedream 5.0 Pro', unlimited: false },
+      { name: 'Accesso anticipato', unlimited: true },
     ],
     features: [
-      'Tutti i modelli (video, immagine, audio)',
-      'Canvas completo',
-      'Video cinematici',
+      '~2.625 immagini o ~100 video',
+      'Accesso anticipato modelli',
+      'Senza watermark',
+      'Supporto dedicato',
     ],
   },
 ]
@@ -226,6 +213,11 @@ export default function PricingPage() {
                   <span>✦</span> MAXIMUM
                 </div>
               )}
+              {plan.oneTime && (
+                <div className="plan-badge onetime">
+                  <span>🎁</span> SOLO 1 VOLTA
+                </div>
+              )}
 
               {/* Header */}
               <div className="plan-header-gvoid">
@@ -238,7 +230,7 @@ export default function PricingPage() {
               <div className="plan-credits-gvoid">
                 <span className="credits-number">{plan.credits.toLocaleString()}</span>
                 <span className="credits-icon">◇</span>
-                <span className="credits-period">/mo</span>
+                <span className="credits-period">{plan.period}</span>
               </div>
               {plan.extraCredits > 0 && (
                 <p className="extra-credits">
@@ -250,7 +242,7 @@ export default function PricingPage() {
               {/* Price */}
               <div className="plan-price-gvoid">
                 <span className="price-value">{plan.price}</span>
-                <span className="price-period">/mo</span>
+                <span className="price-period">{plan.period}</span>
               </div>
 
               {/* Models */}
@@ -288,7 +280,7 @@ export default function PricingPage() {
                 }}
                 onClick={() => handlePlanClick(plan)}
               >
-                Scegli {plan.name}
+                {plan.oneTime ? 'Prova ora' : `Scegli ${plan.name}`}
               </button>
             </div>
           ))}
