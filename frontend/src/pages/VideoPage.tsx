@@ -164,7 +164,7 @@ export default function VideoPage() {
   return (
     <div className="generation-page">
       <div className="generation-header">
-        <h1 className="section-title">AI Video</h1>
+        <h1 className="section-title text-neon-video">AI Video</h1>
         <div className="generation-info-badges">
           {apiInfo.hasAudio && (
             <span className="info-badge audio">
@@ -317,7 +317,7 @@ export default function VideoPage() {
 
           {/* Generate Button */}
           <button
-            className={`generate-btn ${!canAfford ? 'upgrade-required' : ''}`}
+            className={`generate-btn btn-video ${!canAfford ? 'upgrade-required' : ''}`}
             onClick={handleGenerate}
             disabled={!prompt.trim() || isGenerating}
           >

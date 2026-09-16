@@ -91,7 +91,7 @@ export default function ImagePage() {
   return (
     <div className="generation-page">
       <div className="generation-header">
-        <h1 className="section-title">{t('image.title')}</h1>
+        <h1 className="section-title text-neon-image">{t('image.title')}</h1>
         <div className="generation-info-badges">
           <span className="generation-model-badge">
             {selectedModel?.icon} {selectedModel?.name}
@@ -156,7 +156,7 @@ export default function ImagePage() {
           </div>
 
           <button
-            className={`generate-btn ${!canAfford ? 'upgrade-required' : ''}`}
+            className={`generate-btn btn-image ${!canAfford ? 'upgrade-required' : ''}`}
             onClick={handleGenerate}
             disabled={!prompt.trim() || isGenerating}
           >

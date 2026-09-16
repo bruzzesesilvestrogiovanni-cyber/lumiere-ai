@@ -119,26 +119,19 @@ export default function Pricing() {
           {availablePlans.map(plan => (
             <div
               key={plan.id}
-              className="template"
+              className={`pricing-card hover-lift ${plan.popular ? 'popular' : ''}`}
               style={{
                 padding: '24px',
-                position: 'relative',
-                border: plan.popular ? '2px solid var(--accent)' : undefined
+                position: 'relative'
               }}
             >
               {/* Badge Popular */}
               {plan.popular && (
-                <div style={{
+                <div className="badge-popular" style={{
                   position: 'absolute',
                   top: '-12px',
                   left: '50%',
-                  transform: 'translateX(-50%)',
-                  background: 'var(--accent)',
-                  color: 'white',
-                  padding: '4px 12px',
-                  borderRadius: '12px',
-                  fontSize: '12px',
-                  fontWeight: 600
+                  transform: 'translateX(-50%)'
                 }}>
                   Piu popolare
                 </div>
@@ -146,17 +139,11 @@ export default function Pricing() {
 
               {/* Badge One-Time */}
               {plan.oneTime && (
-                <div style={{
+                <div className="badge-new" style={{
                   position: 'absolute',
                   top: '-12px',
                   left: '50%',
-                  transform: 'translateX(-50%)',
-                  background: '#ff9800',
-                  color: 'white',
-                  padding: '4px 12px',
-                  borderRadius: '12px',
-                  fontSize: '12px',
-                  fontWeight: 600
+                  transform: 'translateX(-50%)'
                 }}>
                   Solo 1 volta
                 </div>

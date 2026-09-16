@@ -130,25 +130,25 @@ export default function Home() {
 
       {/* Feature Cards */}
       <div className="feature-cards">
-        <div className="feature-card promo">
+        <div className="feature-card promo glass-card hover-lift">
           <div className="feature-card-title" style={{ fontSize: '18px', marginBottom: '8px' }}>
             {t('home.newRelease')}
           </div>
-          <button style={{ color: 'var(--text)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <button className="btn-glow" style={{ color: 'var(--text)', display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px', borderRadius: '8px', background: 'var(--color-video-bg)' }}>
             {t('home.tryNow')} <span>→</span>
           </button>
         </div>
         {FEATURE_MODELS.map((model) => (
           <div
             key={model.id}
-            className="feature-card"
+            className={`feature-card glass-card hover-lift ${model.id.includes('seedance') ? 'card-video' : 'card-image'}`}
             style={{ backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, transparent 100%), url(${model.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             onClick={() => navigate('/canvas', { state: { model: model.id } })}
           >
             {model.badge && (
-              <span className={`feature-card-badge ${model.badge}`}>{model.badge}</span>
+              <span className={`badge-${model.badge === 'hot' ? 'popular' : 'new'}`}>{model.badge}</span>
             )}
-            <div className="feature-card-icon">{model.icon}</div>
+            <div className={`feature-card-icon ${model.id.includes('seedance') ? 'icon-video' : 'icon-image'}`}>{model.icon}</div>
             <div className="feature-card-title">{model.name}</div>
             <div className="feature-card-desc">{model.desc}</div>
           </div>
@@ -164,7 +164,7 @@ export default function Home() {
           {CANVAS_TEMPLATES.map((tpl) => (
             <div
               key={tpl.id}
-              className="canvas-item"
+              className="canvas-item glass-card hover-scale"
               onClick={() => navigate('/canvas', { state: { template: tpl.id } })}
             >
               <div
@@ -205,7 +205,7 @@ export default function Home() {
       </div>
 
       {/* Bonus Section */}
-      <div className="bonus-section">
+      <div className="bonus-section glass-card">
         <div className="bonus-info">
           <div className="bonus-label">{t('home.limitedOffer')}</div>
           <h2 className="bonus-title">{t('home.launchBonus')}</h2>
@@ -224,7 +224,7 @@ export default function Home() {
         </div>
         <div className="bonus-gallery">
           {BONUS_IMAGES.map((img, i) => (
-            <div key={i} className="bonus-gallery-item">
+            <div key={i} className={`bonus-gallery-item hover-scale ${i >= 4 ? 'card-video' : 'card-image'}`}>
               <div style={{
                 width: '100%',
                 height: '100%',
@@ -234,7 +234,7 @@ export default function Home() {
                 backgroundPosition: 'center'
               }} />
               {i >= 4 && (
-                <span className="play-icon">▶</span>
+                <span className="play-icon icon-video">▶</span>
               )}
             </div>
           ))}
@@ -242,7 +242,7 @@ export default function Home() {
       </div>
 
       {/* Referral Section */}
-      <div className="home-referral-section">
+      <div className="home-referral-section glass-card">
         <div className="home-referral-header">
           <div className="home-referral-icon">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -287,7 +287,7 @@ export default function Home() {
           <h3>{t('referral.earnCreditsTitle')}</h3>
           <p className="home-referral-tools-subtitle">{t('referral.earnCreditsSubtitle')}</p>
           <div className="home-referral-tools-grid">
-            <div className="home-referral-tool-card" onClick={() => navigate('/referral')}>
+            <div className="home-referral-tool-card card-video hover-lift" onClick={() => navigate('/referral')}>
               <div className="tool-preview video">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <polygon points="23 7 16 12 23 17 23 7"/>
@@ -295,11 +295,11 @@ export default function Home() {
                 </svg>
               </div>
               <div className="tool-info">
-                <h4>{t('referral.videoGenerator')}</h4>
+                <h4 className="text-neon-video">{t('referral.videoGenerator')}</h4>
                 <p>{t('referral.videoGeneratorDesc')}</p>
                 <div className="tool-link">
                   <span>lumiere-ai.com/video?ref={referralCode}</span>
-                  <button onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(`https://lumiere-ai.com/video?ref=${referralCode}`); }}>
+                  <button className="btn-video" onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(`https://lumiere-ai.com/video?ref=${referralCode}`); }}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
@@ -309,7 +309,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="home-referral-tool-card" onClick={() => navigate('/referral')}>
+            <div className="home-referral-tool-card card-image hover-lift" onClick={() => navigate('/referral')}>
               <div className="tool-preview image">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
@@ -318,11 +318,11 @@ export default function Home() {
                 </svg>
               </div>
               <div className="tool-info">
-                <h4>{t('referral.imageGenerator')}</h4>
+                <h4 className="text-neon-image">{t('referral.imageGenerator')}</h4>
                 <p>{t('referral.imageGeneratorDesc')}</p>
                 <div className="tool-link">
                   <span>lumiere-ai.com/image?ref={referralCode}</span>
-                  <button onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(`https://lumiere-ai.com/image?ref=${referralCode}`); }}>
+                  <button className="btn-image" onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(`https://lumiere-ai.com/image?ref=${referralCode}`); }}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
@@ -392,7 +392,7 @@ export default function Home() {
 
         <div className="inspiration-grid">
           {filteredInspiration.map((item) => (
-            <div key={item.id} className="inspiration-item">
+            <div key={item.id} className={`inspiration-item hover-scale ${item.type === 'video' ? 'card-video' : 'card-image'}`}>
               <div style={{
                 width: '100%',
                 height: '100%',
@@ -400,7 +400,7 @@ export default function Home() {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
               }} />
-              <span className="inspiration-item-badge">
+              <span className={`inspiration-item-badge badge-${item.type === 'video' ? 'video' : 'image'}`}>
                 {item.type === 'video' ? '▶' : 'AI'} {item.type}
               </span>
             </div>
