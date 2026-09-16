@@ -404,11 +404,20 @@ export default function Home() {
                 <video
                   src={item.video}
                   poster={item.image}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
+                  autoPlay={true}
+                  loop={true}
+                  muted={true}
+                  playsInline={true}
                   preload="auto"
+                  onEnded={(e) => {
+                    const video = e.currentTarget
+                    video.currentTime = 0
+                    video.play()
+                  }}
+                  onLoadedData={(e) => {
+                    const video = e.currentTarget
+                    video.play().catch(() => {})
+                  }}
                   style={{
                     width: '100%',
                     height: '100%',
