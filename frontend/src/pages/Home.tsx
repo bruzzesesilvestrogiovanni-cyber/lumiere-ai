@@ -58,17 +58,24 @@ const BONUS_THUMBS = [
   'https://images.unsplash.com/photo-1682686580186-b55d2a91053c?w=100&h=100&fit=crop',
 ]
 
-const INSPIRATION_ITEMS = [
-  { id: 1, type: 'video' as const, image: 'https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=300&h=400&fit=crop' },
-  { id: 2, type: 'video' as const, image: 'https://images.unsplash.com/photo-1699894009877-20c145e3a29c?w=300&h=400&fit=crop' },
-  { id: 3, type: 'image' as const, image: 'https://images.unsplash.com/photo-1684779847639-fbcc5a57dfe9?w=300&h=400&fit=crop' },
-  { id: 4, type: 'image' as const, image: 'https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=300&h=400&fit=crop' },
-  { id: 5, type: 'image' as const, image: 'https://images.unsplash.com/photo-1698778573682-346d219f7a2d?w=300&h=400&fit=crop' },
-  { id: 6, type: 'video' as const, image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=300&h=400&fit=crop' },
-  { id: 7, type: 'image' as const, image: 'https://images.unsplash.com/photo-1696446702183-cbd13d78e1e7?w=300&h=400&fit=crop' },
-  { id: 8, type: 'image' as const, image: 'https://images.unsplash.com/photo-1682695796497-31a44224d6d6?w=300&h=400&fit=crop' },
-  { id: 9, type: 'video' as const, image: 'https://images.unsplash.com/photo-1682686580849-3e7f67df4015?w=300&h=400&fit=crop' },
-  { id: 10, type: 'image' as const, image: 'https://images.unsplash.com/photo-1682687218147-9806132dc697?w=300&h=400&fit=crop' },
+interface InspirationItem {
+  id: number
+  type: 'video' | 'image'
+  image: string
+  video?: string
+}
+
+const INSPIRATION_ITEMS: InspirationItem[] = [
+  { id: 1, type: 'video', image: 'https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=300&h=400&fit=crop', video: 'https://assets.mixkit.co/videos/preview/mixkit-waves-in-the-water-1164-large.mp4' },
+  { id: 2, type: 'video', image: 'https://images.unsplash.com/photo-1699894009877-20c145e3a29c?w=300&h=400&fit=crop', video: 'https://assets.mixkit.co/videos/preview/mixkit-going-down-a-curved-highway-through-a-mountain-range-41576-large.mp4' },
+  { id: 3, type: 'image', image: 'https://images.unsplash.com/photo-1684779847639-fbcc5a57dfe9?w=300&h=400&fit=crop' },
+  { id: 4, type: 'image', image: 'https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=300&h=400&fit=crop' },
+  { id: 5, type: 'image', image: 'https://images.unsplash.com/photo-1698778573682-346d219f7a2d?w=300&h=400&fit=crop' },
+  { id: 6, type: 'video', image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=300&h=400&fit=crop', video: 'https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4' },
+  { id: 7, type: 'image', image: 'https://images.unsplash.com/photo-1696446702183-cbd13d78e1e7?w=300&h=400&fit=crop' },
+  { id: 8, type: 'image', image: 'https://images.unsplash.com/photo-1682695796497-31a44224d6d6?w=300&h=400&fit=crop' },
+  { id: 9, type: 'video', image: 'https://images.unsplash.com/photo-1682686580849-3e7f67df4015?w=300&h=400&fit=crop', video: 'https://assets.mixkit.co/videos/preview/mixkit-clouds-and-blue-sky-2408-large.mp4' },
+  { id: 10, type: 'image', image: 'https://images.unsplash.com/photo-1682687218147-9806132dc697?w=300&h=400&fit=crop' },
 ]
 
 export default function Home() {
@@ -393,15 +400,30 @@ export default function Home() {
         <div className="inspiration-grid">
           {filteredInspiration.map((item) => (
             <div key={item.id} className={`inspiration-item hover-scale ${item.type === 'video' ? 'card-video' : 'card-image'}`}>
-              <div style={{
-                width: '100%',
-                height: '100%',
-                backgroundImage: `url(${item.image})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }} />
+              {item.type === 'video' && item.video ? (
+                <video
+                  src={item.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                />
+              ) : (
+                <div style={{
+                  width: '100%',
+                  height: '100%',
+                  backgroundImage: `url(${item.image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+                }} />
+              )}
               <span className={`inspiration-item-badge badge-${item.type === 'video' ? 'video' : 'image'}`}>
-                {item.type === 'video' ? '▶' : 'AI'} {item.type}
+                {item.type === 'video' ? '▶ VIDEO' : 'AI IMAGE'}
               </span>
             </div>
           ))}
