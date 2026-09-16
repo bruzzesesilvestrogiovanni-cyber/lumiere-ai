@@ -11,6 +11,8 @@ interface Plan {
   extraCredits: number
   price: string
   priceValue: number
+  period: string
+  totalCredits: number
   color: 'green' | 'yellow' | 'cyan' | 'orange' | 'pink'
   badge?: 'popular' | 'maximum'
   models: { name: string; unlimited: boolean }[]
@@ -26,6 +28,8 @@ const PLANS: Plan[] = [
     extraCredits: 0,
     price: '€9,99',
     priceValue: 9.99,
+    period: '/mese',
+    totalCredits: 1000,
     color: 'green',
     models: [],
     features: [
@@ -46,6 +50,8 @@ const PLANS: Plan[] = [
     extraCredits: 300,
     price: '€29,99',
     priceValue: 29.99,
+    period: '/mese',
+    totalCredits: 3300,
     color: 'yellow',
     models: [
       { name: 'Seedream 4.5', unlimited: true },
@@ -69,6 +75,8 @@ const PLANS: Plan[] = [
     extraCredits: 800,
     price: '€72',
     priceValue: 72,
+    period: '/mese',
+    totalCredits: 8300,
     color: 'cyan',
     models: [
       { name: 'SeedAudio 1.0', unlimited: true },
@@ -91,6 +99,8 @@ const PLANS: Plan[] = [
     extraCredits: 3000,
     price: '€149',
     priceValue: 149,
+    period: '/mese',
+    totalCredits: 18000,
     color: 'orange',
     badge: 'popular',
     models: [
@@ -114,6 +124,8 @@ const PLANS: Plan[] = [
     extraCredits: 8000,
     price: '€319',
     priceValue: 319,
+    period: '/mese',
+    totalCredits: 40000,
     color: 'pink',
     badge: 'maximum',
     models: [
