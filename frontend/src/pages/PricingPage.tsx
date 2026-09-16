@@ -200,7 +200,7 @@ export default function PricingPage() {
           {PLANS.map((plan, index) => (
             <div
               key={plan.id}
-              className={`plan-card-gvoid ${plan.badge ? `badge-${plan.badge}` : ''}`}
+              className={`plan-card-gvoid color-${plan.color} ${plan.badge ? `badge-${plan.badge}` : ''}`}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Badge */}

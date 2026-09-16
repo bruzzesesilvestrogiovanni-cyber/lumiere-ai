@@ -5276,19 +5276,53 @@ textarea { min-height: 110px; resize: vertical; }
 
 .plan-card-gvoid:hover {
   transform: translateY(-8px);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
-/* Popular Badge */
+/* Color-specific hover glow */
+.plan-card-gvoid.color-green:hover {
+  border-color: #00ff88;
+  box-shadow: 0 0 40px rgba(0, 255, 136, 0.3), 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.plan-card-gvoid.color-yellow:hover {
+  border-color: #ffd700;
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.plan-card-gvoid.color-cyan:hover {
+  border-color: #00d4ff;
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.3), 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.plan-card-gvoid.color-orange:hover {
+  border-color: #ff9500;
+  box-shadow: 0 0 40px rgba(255, 149, 0, 0.3), 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.plan-card-gvoid.color-pink:hover {
+  border-color: #ff6b9d;
+  box-shadow: 0 0 40px rgba(255, 107, 157, 0.3), 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* Popular Badge - always glowing */
 .plan-card-gvoid.badge-popular {
-  border-color: var(--color-orange, #ff9500);
+  border-color: rgba(255, 149, 0, 0.5);
   box-shadow: 0 0 30px rgba(255, 149, 0, 0.2);
 }
 
+.plan-card-gvoid.badge-popular:hover {
+  border-color: #ff9500;
+  box-shadow: 0 0 50px rgba(255, 149, 0, 0.4), 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
 .plan-card-gvoid.badge-maximum {
-  border-color: var(--color-pink, #ff6b9d);
+  border-color: rgba(255, 107, 157, 0.5);
   box-shadow: 0 0 30px rgba(255, 107, 157, 0.2);
+}
+
+.plan-card-gvoid.badge-maximum:hover {
+  border-color: #ff6b9d;
+  box-shadow: 0 0 50px rgba(255, 107, 157, 0.4), 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
 .plan-badge {
