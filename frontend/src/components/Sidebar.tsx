@@ -8,12 +8,13 @@ interface NavItemProps {
   label: string
   badge?: 'hot' | 'new'
   collapsed?: boolean
+  color?: 'video' | 'image' | 'chat' | 'audio'
 }
 
-function NavItem({ to, icon, label, badge, collapsed }: NavItemProps) {
+function NavItem({ to, icon, label, badge, collapsed, color }: NavItemProps) {
   return (
     <NavLink to={to} className={({ isActive }) => 'nav-item' + (isActive ? ' active' : '')} title={label}>
-      <span className="nav-item-icon">{icon}</span>
+      <span className={`nav-item-icon ${color ? `icon-${color}` : ''}`}>{icon}</span>
       {!collapsed && <span>{label}</span>}
       {!collapsed && badge && <span className={`nav-badge ${badge}`}>{badge}</span>}
     </NavLink>
@@ -38,6 +39,7 @@ export default function Sidebar() {
           icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>}
           label={t('nav.image')}
           collapsed={collapsed}
+          color="image"
         />
         <NavItem
           to="/video"
@@ -45,6 +47,7 @@ export default function Sidebar() {
           label={t('nav.video')}
           badge="hot"
           collapsed={collapsed}
+          color="video"
         />
         <NavItem
           to="/agent"
@@ -58,12 +61,14 @@ export default function Sidebar() {
           icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>}
           label={t('nav.audio')}
           collapsed={collapsed}
+          color="audio"
         />
         <NavItem
           to="/chat"
           icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>}
           label={t('nav.chat')}
           collapsed={collapsed}
+          color="chat"
         />
       </nav>
 
