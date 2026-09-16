@@ -66,15 +66,15 @@ interface InspirationItem {
 }
 
 const INSPIRATION_ITEMS: InspirationItem[] = [
-  { id: 1, type: 'video', image: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?w=300&h=400&fit=crop', video: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
-  { id: 2, type: 'video', image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=300&h=400&fit=crop', video: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4' },
+  { id: 1, type: 'video', image: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?w=300&h=400&fit=crop', video: 'https://res.cloudinary.com/demo/video/upload/q_auto/dog.mp4' },
+  { id: 2, type: 'video', image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=300&h=400&fit=crop', video: 'https://res.cloudinary.com/demo/video/upload/q_auto/elephants.mp4' },
   { id: 3, type: 'image', image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=300&h=400&fit=crop' },
   { id: 4, type: 'image', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=400&fit=crop' },
   { id: 5, type: 'image', image: 'https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?w=300&h=400&fit=crop' },
-  { id: 6, type: 'video', image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=300&h=400&fit=crop', video: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' },
+  { id: 6, type: 'video', image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=300&h=400&fit=crop', video: 'https://res.cloudinary.com/demo/video/upload/q_auto/sea-turtle.mp4' },
   { id: 7, type: 'image', image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=300&h=400&fit=crop' },
   { id: 8, type: 'image', image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&h=400&fit=crop' },
-  { id: 9, type: 'video', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=400&fit=crop', video: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4' },
+  { id: 9, type: 'video', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=400&fit=crop', video: 'https://res.cloudinary.com/demo/video/upload/q_auto/snow_horses.mp4' },
   { id: 10, type: 'image', image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=300&h=400&fit=crop' },
 ]
 
@@ -191,22 +191,11 @@ export default function Home() {
         </div>
         <div className="showcase-video">
           <video
-            src="https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
-            autoPlay={true}
-            loop={true}
-            muted={true}
-            playsInline={true}
-            preload="auto"
-            onCanPlay={(e) => {
-              e.currentTarget.play().catch(() => {})
-            }}
-            onError={(e) => {
-              // Fallback to another video if first fails
-              const video = e.currentTarget
-              if (!video.src.includes('Sintel')) {
-                video.src = 'https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4'
-              }
-            }}
+            src="https://res.cloudinary.com/demo/video/upload/q_auto/dog.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
             style={{
               width: '100%',
               height: '100%',
@@ -409,15 +398,10 @@ export default function Home() {
               {item.type === 'video' && item.video ? (
                 <video
                   src={item.video}
-                  poster={item.image}
-                  autoPlay={true}
-                  loop={true}
-                  muted={true}
-                  playsInline={true}
-                  preload="metadata"
-                  onCanPlay={(e) => {
-                    e.currentTarget.play().catch(() => {})
-                  }}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                   style={{
                     width: '100%',
                     height: '100%',
