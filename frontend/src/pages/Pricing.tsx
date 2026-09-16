@@ -114,7 +114,7 @@ export default function Pricing() {
         {availablePlans.map(plan => (
           <div
             key={plan.id}
-            className={`pricing-plan-card glass-card hover-lift card-${plan.color} ${plan.popular ? 'popular' : ''}`}
+            className={`pricing-plan-card glass-card card-${plan.color} ${plan.popular ? 'popular' : ''}`}
           >
             {/* Badge */}
             {plan.popular && (
