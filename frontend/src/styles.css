@@ -4953,12 +4953,75 @@ textarea { min-height: 110px; resize: vertical; }
   padding: 28px;
   position: relative;
   min-height: 420px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: pricing-card-enter 0.6s ease-out backwards;
 }
 
+/* Staggered entrance animation */
+.pricing-plan-card:nth-child(1) { animation-delay: 0.1s; }
+.pricing-plan-card:nth-child(2) { animation-delay: 0.2s; }
+.pricing-plan-card:nth-child(3) { animation-delay: 0.3s; }
+.pricing-plan-card:nth-child(4) { animation-delay: 0.4s; }
+.pricing-plan-card:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes pricing-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Hover effects for all cards */
+.pricing-plan-card:hover {
+  transform: translateY(-12px) scale(1.03);
+}
+
+/* Color-specific hover glow */
+.pricing-plan-card.card-video:hover {
+  border-color: var(--color-video) !important;
+  box-shadow: 0 0 50px var(--color-video-glow), 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.pricing-plan-card.card-image:hover {
+  border-color: var(--color-image) !important;
+  box-shadow: 0 0 50px var(--color-image-glow), 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.pricing-plan-card.card-chat:hover {
+  border-color: var(--color-chat) !important;
+  box-shadow: 0 0 50px var(--color-chat-glow), 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.pricing-plan-card.card-audio:hover {
+  border-color: var(--color-audio) !important;
+  box-shadow: 0 0 50px var(--color-audio-glow), 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Popular card - always glowing */
 .pricing-plan-card.popular {
   border-color: var(--color-video) !important;
   box-shadow: 0 0 40px var(--color-video-glow);
   transform: scale(1.02);
+  animation: pricing-popular-glow 3s ease-in-out infinite, pricing-card-enter 0.6s ease-out backwards;
+  animation-delay: 0.3s, 0.3s;
+}
+
+.pricing-plan-card.popular:hover {
+  transform: translateY(-12px) scale(1.05);
+  box-shadow: 0 0 60px var(--color-video-glow), 0 25px 70px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes pricing-popular-glow {
+  0%, 100% {
+    box-shadow: 0 0 30px var(--color-video-glow);
+  }
+  50% {
+    box-shadow: 0 0 50px var(--color-video-glow), 0 0 80px rgba(0, 212, 255, 0.2);
+  }
 }
 
 .pricing-badge {
@@ -5055,12 +5118,46 @@ textarea { min-height: 110px; resize: vertical; }
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  transition: all var(--transition-normal);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-top: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-plan-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
 }
 
 .pricing-plan-cta:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.pricing-plan-cta:hover::before {
+  left: 100%;
+}
+
+/* Button glow effects per color */
+.pricing-plan-cta.btn-video:hover {
+  box-shadow: 0 0 25px var(--color-video-glow), 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.pricing-plan-cta.btn-image:hover {
+  box-shadow: 0 0 25px var(--color-image-glow), 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.pricing-plan-cta.btn-chat:hover {
+  box-shadow: 0 0 25px var(--color-chat-glow), 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.pricing-plan-cta.btn-audio:hover {
+  box-shadow: 0 0 25px var(--color-audio-glow), 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
 .pricing-footer {
