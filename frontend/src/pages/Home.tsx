@@ -66,15 +66,15 @@ interface InspirationItem {
 }
 
 const INSPIRATION_ITEMS: InspirationItem[] = [
-  { id: 1, type: 'video', image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=300&h=400&fit=crop', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
-  { id: 2, type: 'video', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&h=400&fit=crop', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4' },
+  { id: 1, type: 'video', image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=300&h=400&fit=crop', video: 'https://cdn.pixabay.com/video/2020/05/25/40130-424930032_tiny.mp4' },
+  { id: 2, type: 'video', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&h=400&fit=crop', video: 'https://cdn.pixabay.com/video/2019/06/19/24632-343924517_tiny.mp4' },
   { id: 3, type: 'image', image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=300&h=400&fit=crop' },
   { id: 4, type: 'image', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=400&fit=crop' },
   { id: 5, type: 'image', image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=300&h=400&fit=crop' },
-  { id: 6, type: 'video', image: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=300&h=400&fit=crop', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' },
+  { id: 6, type: 'video', image: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=300&h=400&fit=crop', video: 'https://cdn.pixabay.com/video/2022/03/15/111093-688620181_tiny.mp4' },
   { id: 7, type: 'image', image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&h=400&fit=crop' },
   { id: 8, type: 'image', image: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=300&h=400&fit=crop' },
-  { id: 9, type: 'video', image: 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=300&h=400&fit=crop', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4' },
+  { id: 9, type: 'video', image: 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=300&h=400&fit=crop', video: 'https://cdn.pixabay.com/video/2021/08/20/86497-592694636_tiny.mp4' },
   { id: 10, type: 'image', image: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=300&h=400&fit=crop' },
 ]
 
@@ -190,24 +190,28 @@ export default function Home() {
           <h2 className="section-title">{t('home.showcase')}</h2>
         </div>
         <div className="showcase-video">
-          <div
+          <video
+            src="https://cdn.pixabay.com/video/2024/05/31/214880_large.mp4"
+            autoPlay={true}
+            loop={true}
+            muted={true}
+            playsInline={true}
+            preload="auto"
+            onEnded={(e) => {
+              const video = e.currentTarget
+              video.currentTime = 0
+              video.play()
+            }}
+            onLoadedData={(e) => {
+              e.currentTarget.play().catch(() => {})
+            }}
             style={{
               width: '100%',
               height: '100%',
-              backgroundImage: 'linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://images.unsplash.com/photo-1626379953822-baec19c3accd?w=1200&h=600&fit=crop)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white',
+              objectFit: 'cover',
+              backgroundColor: '#111'
             }}
-          >
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '64px', marginBottom: '16px', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>▶</div>
-              <div style={{ fontSize: '18px', fontWeight: '500', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{t('home.videoPlaceholder')}</div>
-            </div>
-          </div>
+          />
         </div>
       </div>
 
